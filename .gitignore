@@ -1,0 +1,86 @@
+# =========================
+# Go
+# =========================
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Build output
+bin/
+dist/
+build/
+
+# Coverage
+coverage.out
+*.coverprofile
+
+# Go workspace
+go.work
+go.work.sum
+
+# Vendor (ignore only if not committing vendor)
+vendor/
+
+# =========================
+# Environment Variables
+# =========================
+
+.env
+.env.local
+.env.production
+
+# =========================
+# IDEs
+# =========================
+
+.vscode/
+.idea/
+
+# JetBrains
+*.iml
+
+# =========================
+# OS Files
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+
+*.log
+logs/
+
+# =========================
+# Temporary Files
+# =========================
+
+tmp/
+temp/
+
+# Air (live reload)
+.air.toml
+
+# =========================
+# Database Dumps
+# =========================
+
+*.sql
+*.dump
+*.bak
+
+# =========================
+# Docker
+# =========================
+
+docker-data/
+postgres-data/
