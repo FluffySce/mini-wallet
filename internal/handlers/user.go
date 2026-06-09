@@ -10,18 +10,18 @@ import (
 
 // protected endpoint to access user/profile
 func GetMe(c *gin.Context) {
-	userId :=
-		c.MustGet("userId").(uint)
+	userID :=
+		c.MustGet("userID").(uint)
 	var user models.User
 
 	database.DB.First(
 		&user,
-		userId,
+		userID,
 	)
 	c.JSON(
 		http.StatusOK,
 		gin.H{
-			"id":    userId,
+			"id":    userID,
 			"name":  user.Name,
 			"email": user.Email,
 		},
