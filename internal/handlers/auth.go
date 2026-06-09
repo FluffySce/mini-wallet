@@ -11,7 +11,7 @@ import (
 
 func Register(c *gin.Context) {
 	var req models.RegisterRequest
-	if err := c.ShouldBindBodyWithJSON(&req); err != nil {
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(
 			http.StatusBadRequest,
 			gin.H{
@@ -68,4 +68,58 @@ func Register(c *gin.Context) {
 			"email": user.Email,
 		},
 	)
+}
+
+func Login(c *gin.Context) {
+	var req models.LoginRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"error": err.Error(),
+			},
+		)
+		return
+	}
+	var user models.User
+	if err := database.DB.
+		Where("email = ?", req.Email).
+		First(&user).Error; err != nil {
+		c.JSON(
+			http.StatusUnauthorized,
+			gin.H{
+				"error": "invalid credentials",
+			},
+		)
+		return
+	}
+	if !utils.CheckPasswordHash(
+		req.Password,
+		user.Password,
+	) {
+		c.JSON(
+			http.StatusUnauthorized,
+			gin.H{
+				"error": "Invalid password",
+			},
+		)
+		return
+	}
+	token, err := utils.GenerateToken(user.ID)
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"error": "token generation failed",
+			},
+		)
+		return
+	}
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"token": token,
+		},
+	)
+
 }
