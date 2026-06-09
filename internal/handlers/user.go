@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// protected endpoint to access user/profile
+// GetMe retrieves the authenticated user's profile information
 func GetMe(c *gin.Context) {
 	userID :=
 		c.MustGet("userID").(uint)

@@ -15,7 +15,7 @@ func Register(c *gin.Context) {
 		c.JSON(
 			http.StatusBadRequest,
 			gin.H{
-				"error": err.Error(),
+				"error": "Invalid request format",
 			},
 		)
 		return
@@ -29,7 +29,7 @@ func Register(c *gin.Context) {
 		c.JSON(
 			http.StatusConflict,
 			gin.H{
-				"error": "email already exists",
+				"error": "An account with this email already exists",
 			},
 		)
 		return
@@ -40,7 +40,7 @@ func Register(c *gin.Context) {
 		c.JSON(
 			http.StatusInternalServerError,
 			gin.H{
-				"error": "hash failed",
+				"error": "Failed to process password",
 			},
 		)
 		return
@@ -55,7 +55,7 @@ func Register(c *gin.Context) {
 		c.JSON(
 			http.StatusInternalServerError,
 			gin.H{
-				"error": "user creation failed",
+				"error": "Failed to create account",
 			},
 		)
 		return
@@ -69,7 +69,7 @@ func Register(c *gin.Context) {
 		c.JSON(
 			http.StatusInternalServerError,
 			gin.H{
-				"error": "wallet creation failed",
+				"error": "Failed to initialize wallet",
 			},
 		)
 		return
@@ -90,7 +90,7 @@ func Login(c *gin.Context) {
 		c.JSON(
 			http.StatusBadRequest,
 			gin.H{
-				"error": err.Error(),
+				"error": "Invalid request format",
 			},
 		)
 		return
@@ -102,7 +102,7 @@ func Login(c *gin.Context) {
 		c.JSON(
 			http.StatusUnauthorized,
 			gin.H{
-				"error": "invalid credentials",
+				"error": "Invalid email or password",
 			},
 		)
 		return
@@ -114,7 +114,7 @@ func Login(c *gin.Context) {
 		c.JSON(
 			http.StatusUnauthorized,
 			gin.H{
-				"error": "Invalid password",
+				"error": "Invalid email or password",
 			},
 		)
 		return
@@ -124,7 +124,7 @@ func Login(c *gin.Context) {
 		c.JSON(
 			http.StatusInternalServerError,
 			gin.H{
-				"error": "token generation failed",
+				"error": "Failed to generate authentication token",
 			},
 		)
 		return
