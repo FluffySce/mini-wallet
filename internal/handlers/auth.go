@@ -45,7 +45,7 @@ func Register(c *gin.Context) {
 		)
 		return
 	}
-
+	// CHANGE: only user creation
 	user := models.User{
 		Name:     req.Name,
 		Email:    req.Email,
@@ -56,6 +56,20 @@ func Register(c *gin.Context) {
 			http.StatusInternalServerError,
 			gin.H{
 				"error": "user creation failed",
+			},
+		)
+		return
+	}
+	wallet := models.Wallet{
+		UserID:  user.ID,
+		Balance: 0,
+	}
+
+	if err := database.DB.Create(&wallet).Error; err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"error": "wallet creation failed",
 			},
 		)
 		return
