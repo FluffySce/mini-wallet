@@ -37,6 +37,8 @@ func ConnectDB() {
 	fmt.Println("Database connected")
 	err = DB.AutoMigrate(
 		&models.User{},
+		&models.Wallet{},
+		&models.Transaction{},
 	)
 
 	if err != nil {
