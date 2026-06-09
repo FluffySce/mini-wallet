@@ -28,5 +28,13 @@ func SetupRoute(router *gin.Engine) {
 		"/login",
 		handlers.Login,
 	)
+	auth.GET(
+		"/wallet",
+		handlers.GetWallet,
+	)
+	auth.POST(
+		"/wallet/topup",
+		handlers.TopUp,
+	)
 
 }
