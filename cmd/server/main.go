@@ -4,6 +4,7 @@ import (
 	"mini-wallet/config"
 	"mini-wallet/internal/database"
 	"mini-wallet/internal/routes"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -21,6 +22,7 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
+			os.Getenv("FRONTEND_URL"),
 		},
 		AllowMethods: []string{
 			"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS",
@@ -32,5 +34,11 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 	routes.SetupRoute(router)
-	router.Run(":8000")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8000"
+	}
+
+	router.Run(":" + port)
 }
