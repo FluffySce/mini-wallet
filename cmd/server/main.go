@@ -14,7 +14,7 @@ import (
 func main() {
 	config.LoadEnv()
 	database.ConnectDB()
-
+	gin.SetMode(gin.ReleaseMode)
 	// route handling
 	router := gin.Default()
 
