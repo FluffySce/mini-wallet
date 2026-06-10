@@ -22,14 +22,18 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
-			os.Getenv("FRONTEND_URL"),
 		},
+
 		AllowMethods: []string{
 			"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS",
 		},
+
 		AllowHeaders: []string{
-			"Origin", "Content-Type", "Authorization",
+			"Origin",
+			"Content-Type",
+			"Authorization",
 		},
+
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
