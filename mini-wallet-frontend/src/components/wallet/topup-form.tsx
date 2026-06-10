@@ -67,7 +67,7 @@ export function TopupForm({ onSuccess }: Props) {
         <div className="space-y-4">
           <Input
             type="number"
-            placeholder="amount in rupees"
+            placeholder="Amount in rupees"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
