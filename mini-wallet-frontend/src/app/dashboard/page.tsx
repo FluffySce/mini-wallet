@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { api } from "@/lib/api";
 
 import { BalanceCard } from "@/components/wallet/balance-card";
+import { TopupForm } from "@/components/wallet/topup-form";
 
 export default function DashboardPage() {
   const [balance, setBalance] = useState(0);
@@ -37,7 +38,10 @@ export default function DashboardPage() {
     <div className="max-w-6xl mx-auto p-8">
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <p className="text-muted-foreground">Welcome Back</p>
-      <BalanceCard balance={balance}></BalanceCard>
+      <div className="grid gap-6">
+        <BalanceCard balance={balance}></BalanceCard>
+        <TopupForm onSuccess={fetchWallet} />
+      </div>
     </div>
   );
 }
