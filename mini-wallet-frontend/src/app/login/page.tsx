@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -80,6 +81,15 @@ export default function LoginPage() {
             <Button className="w-full" onClick={handleLogin} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>
+            <div className="mt-4 text-center text-sm text-slate-600">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/register"
+                className="text-indigo-600 hover:underline"
+              >
+                Register
+              </Link>
+            </div>
           </div>
         </CardContent>
       </Card>
