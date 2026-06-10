@@ -45,7 +45,13 @@ export function TransferForm({ onSuccess }: Props) {
   };
 
   return (
-    <Card>
+    <Card
+      className="
+      hover:shadow-xl
+      transition-all
+      duration-300
+      "
+    >
       <CardHeader>
         <CardTitle>Transfer Money</CardTitle>
       </CardHeader>

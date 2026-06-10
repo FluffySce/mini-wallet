@@ -59,7 +59,13 @@ export function TopupForm({ onSuccess }: Props) {
   };
 
   return (
-    <Card>
+    <Card
+      className="
+      hover:shadow-xl
+      transition-all
+      duration-300
+      "
+    >
       <CardHeader>
         <CardTitle>Top Up Wallet</CardTitle>
       </CardHeader>
