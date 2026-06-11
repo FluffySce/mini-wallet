@@ -1,257 +1,341 @@
-# Mini Wallet Backend
+# Mini Wallet
 
-A robust digital wallet backend system built with Go, Gin, GORM, and PostgreSQL. Enables secure user authentication, wallet management, and peer-to-peer transfers with transaction tracking.
+<p align="center">
+  <img src="docs/images/overview.png" alt="Mini Wallet Overview" width="100%">
+</p>
+
+A full-stack digital wallet application that enables users to securely register, authenticate, manage wallet balances, transfer funds, and track transaction history.
+
+Built to explore fintech system fundamentals, secure authentication, transaction processing, REST API design, database transactions, and cloud deployment using modern technologies.
+
+---
 
 ## Features
 
-- **User Management**: Registration and login with secure password hashing
-- **JWT Authentication**: Token-based authentication for protected routes
-- **Wallet Management**: Create wallets, check balance, and perform top-ups
-- **Transfers**: Secure peer-to-peer wallet transfers with validation
-- **Transaction History**: Track all wallet transactions
-- **Protected Routes**: API endpoints secured with JWT middleware
+### Authentication
+- User Registration
+- User Login
+- JWT Authentication
+- Protected API Routes
+- Password Hashing with bcrypt
 
-## Architecture
+### Wallet Management
+- Wallet Creation
+- Balance Tracking
+- Wallet Top-Up
 
-```text
-+-------------+
-|  Frontend   |
-|  Next.js    |
-+------+------+ 
-       |
-       v
-+-------------+
-| Gin Server  |
-| REST APIs   |
-+------+------+ 
-       |
-       v
-+-------------+
-| PostgreSQL  |
-+-------------+
-```
+### Transactions
+- Peer-to-Peer Transfers
+- Transaction History
+- Atomic Database Transactions
+- Transfer Validation
+
+### Deployment
+- Frontend deployed on Vercel
+- Backend deployed on Render
+- PostgreSQL hosted on Neon
+
+---
 
 ## Tech Stack
 
-- **Language**: Go
-- **Web Framework**: Gin
-- **ORM**: GORM
-- **Database**: PostgreSQL
-- **Authentication**: JWT (JSON Web Tokens)
+| Category | Technology |
+|-----------|------------|
+| Frontend | Next.js, React, TypeScript, Tailwind CSS |
+| Backend | Go, Gin |
+| Database | PostgreSQL, GORM |
+| Authentication | JWT, bcrypt |
+| Hosting | Vercel, Render, Neon |
 
-## Database Schema
+---
+
+# Architecture
+
+<p align="center">
+  <img src="docs/images/architecture.png" alt="System Architecture" width="250>
+</p>
+
+### Architecture Overview
+
+The application follows a monolithic backend architecture.
+
+1. Users interact with the Next.js frontend.
+2. The frontend communicates with the Go backend through REST APIs.
+3. JWT authentication secures protected routes.
+4. Business logic is handled through Gin handlers.
+5. Data is persisted in PostgreSQL hosted on Neon.
+6. The backend is deployed on Render while the frontend is deployed on Vercel.
+
+---
+
+# Authentication Flow
+
+<p align="center">
+  <img src="docs/images/auth-flow.png" alt="Authentication Flow" width="250">
+</p>
+
+### Registration
+
+1. User submits registration details.
+2. Password is hashed using bcrypt.
+3. User record is stored in PostgreSQL.
+4. A wallet is automatically created.
+
+### Login
+
+1. User submits email and password.
+2. Credentials are validated.
+3. JWT token is generated.
+4. Protected endpoints require the token.
+
+---
+
+# Wallet Operations
+
+<p align="center">
+  <img src="docs/images/wallet-flow.png" alt="Wallet Flow" width="250">
+</p>
+
+Users can:
+
+- View wallet details
+- Check balance
+- Add funds through top-up
+- Transfer funds to another user
+- View transaction history
+
+---
+
+# Money Transfer Process
+
+<p align="center">
+  <img src="docs/images/api-lifecycle.png" alt="API Lifecycle" width="850">
+</p>
+
+### Transfer Validation
+
+Before executing a transfer, the system validates:
+
+- Sender authentication
+- Recipient existence
+- Sufficient balance
+- Valid transfer amount
+
+Transfers are executed inside a database transaction to ensure consistency and prevent partial updates.
+
+---
+
+# Database Schema
+
+<p align="center">
+  <img src="docs/images/db-erd.png" alt="Database Schema" width="250">
+</p>
+
+### Core Entities
+
+#### Users
+Stores user account information and authentication credentials.
+
+#### Wallets
+Maintains wallet balances associated with users.
+
+#### Transactions
+Records all wallet operations including transfers and top-ups.
+
+---
+
+# Deployment Architecture
+
+<p align="center">
+  <img src="docs/images/deployment-flow.png" alt="Deployment Architecture" width="250">
+</p>
+
+### Infrastructure
+
+| Component | Provider |
+|------------|-----------|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | Neon PostgreSQL |
+
+---
+
+# Project Structure
 
 ```text
-+---------+
-|  Users  |
-+---------+
-| id      |
-| name    |
-| email   |
-| password|
-+----+----+
-     |
-     | 1 : 1
-     |
-+----v----+
-| Wallets |
-+---------+
-| id      |
-| user_id |
-| balance |
-+----+----+
-     |
-     | 1 : N
-     |
-+----v-----------+
-| Transactions   |
-+----------------+
-| id             |
-| sender_wallet  |
-| receiver_wallet|
-| amount         |
-| type           |
-| status         |
-| description    |
-+----------------+
-```
-
-## Authentication Flow
-
-```text
-Register
-    |
-    v
-Hash Password
-    |
-    v
-Store User
-    |
-    v
-Create Wallet
-
-----------------
-
-Login
-    |
-    v
-Verify Password
-    |
-    v
-Generate JWT
-    |
-    v
-Protected Routes
-```
-
-## Wallet Flow
-
-```text
-User
-  |
-  +------> Wallet
-                |
-                +------> Balance
-                |
-                +------> Transactions
-```
-
-## Transfer Process
-
-```text
-Sender Wallet
-      |
-      | Verify Balance
-      v
-Database Transaction
-      |
-      +---- Deduct Sender
-      |
-      +---- Credit Receiver
-      |
-      +---- Create Transaction Record
-      |
-      v
-Commit Transaction
-```
-
-## Project Structure
-
-```
 .
 ├── cmd/
 │   └── server/
 │       └── main.go
+│
 ├── config/
 │   └── config.go
+│
 ├── internal/
 │   ├── constants/
 │   │   └── transaction.go
+│   │
 │   ├── database/
 │   │   └── db.go
+│   │
 │   ├── handlers/
 │   │   ├── auth.go
 │   │   ├── health.go
 │   │   ├── transaction.go
 │   │   ├── user.go
 │   │   └── wallet.go
+│   │
 │   ├── middleware/
 │   │   └── jwt.go
+│   │
 │   ├── models/
+│   │
 │   ├── routes/
 │   │   └── routes.go
+│   │
 │   └── utils/
+│
 ├── go.mod
+├── go.sum
 └── README.md
 ```
 
-## API Endpoints
+---
 
-### Authentication
-- `POST /register` - Register a new user
-- `POST /login` - Login and receive JWT token
+# API Endpoints
 
-### User
-- `GET /me` - Get authenticated user profile
+## Authentication
 
-### Wallet
-- `GET /wallet` - Get wallet details and balance
-- `POST /wallet/topup` - Add funds to wallet
-- `POST /wallet/transfer` - Transfer funds to another user
+| Method | Endpoint |
+|----------|----------|
+| POST | `/register` |
+| POST | `/login` |
 
-### Transactions
-- `GET /transactions` - Get transaction history
+---
 
-### Health
-- `GET /health` - Check API status
+## User
 
-## Getting Started
+| Method | Endpoint |
+|----------|----------|
+| GET | `/me` |
 
-### Prerequisites
-- Go 1.16+
-- PostgreSQL 12+
+---
 
-### Installation
+## Wallet
 
-1. Clone the repository
+| Method | Endpoint |
+|----------|----------|
+| GET | `/wallet` |
+| POST | `/wallet/topup` |
+| POST | `/wallet/transfer` |
+
+---
+
+## Transactions
+
+| Method | Endpoint |
+|----------|----------|
+| GET | `/transactions` |
+
+---
+
+## Health
+
+| Method | Endpoint |
+|----------|----------|
+| GET | `/health` |
+
+---
+
+# Local Development Setup
+
+## Prerequisites
+
+- Go 1.24+
+- PostgreSQL
+- Node.js
+- npm
+
+---
+
+## Clone Repository
+
 ```bash
 git clone <repository-url>
+
 cd mini-wallet
 ```
 
-2. Install dependencies
+---
+
+## Backend Setup
+
 ```bash
 go mod tidy
-```
 
-3. Configure environment variables
-```bash
-cp .env.example .env
-# Edit .env with your PostgreSQL credentials
-```
-
-4. Start PostgreSQL
-```bash
-# Make sure PostgreSQL is running
-```
-
-5. Run the server
-```bash
 go run cmd/server/main.go
 ```
 
-The server will start on `http://localhost:8080`
+---
 
-## Testing the API
+## Environment Variables
 
-### Register a User
-```bash
-curl -X POST http://localhost:8080/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
+Create a `.env` file:
+
+```env
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+
+JWT_SECRET=
 ```
 
-### Login
+---
+
+## Frontend Setup
+
 ```bash
-curl -X POST http://localhost:8080/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"john@example.com","password":"password123"}'
+npm install
+
+npm run dev
 ```
 
-### Get User Profile (requires token)
-```bash
-curl -X GET http://localhost:8080/me \
-  -H "Authorization: Bearer <your-jwt-token>"
-```
+---
 
-## Future Improvements
+# Challenges & Learnings
 
-- **Transaction Export**: Export transaction statements in CSV/PDF format
-- **Admin Dashboard**: Analytics and user management interface
-- **Pagination**: Add pagination to transaction history
-- **Wallet Freezing**: Temporary wallet lock functionality
-- **Multiple Wallets**: Support multiple wallets per user
-- **Audit Logs**: Detailed logging of all system actions
-- **Rate Limiting**: Implement rate limiting for API endpoints
-- **Two-Factor Authentication**: Enhanced security with 2FA
-- **Notifications**: Email/SMS notifications for transactions
+During development, several real-world engineering challenges were addressed:
+
+- Designing wallet balance management
+- Executing atomic money transfers using database transactions
+- Structuring a scalable Go backend
+- Connecting cloud-hosted PostgreSQL databases
+- Managing deployment across Render, Neon, and Vercel
+- Handling environment variables and production configuration
+
+---
+
+# Future Improvements
+
+- Refresh Tokens
+- Email Verification
+- Two-Factor Authentication
+- Rate Limiting
+- Pagination
+- Transaction Export (CSV/PDF)
+- Audit Logs
+- Admin Dashboard
+- Real-Time Notifications
+- Multi-Currency Wallet Support
+
+---
+
+# Author
+
+**Farhan Khan**
+
+B.Tech Computer Science Engineering
+
+Built as a portfolio project to explore backend engineering, fintech systems, secure authentication, database transactions, and cloud-native deployment.
