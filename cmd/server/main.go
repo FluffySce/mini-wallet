@@ -22,6 +22,7 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
+			"https://mini-wallet-theta.vercel.app",
 		},
 
 		AllowMethods: []string{
