@@ -84,7 +84,7 @@ Tracks wallet activity including transfers and top-ups with transaction status i
 # System Architecture
 
 <p align="center">
-  <img src="docs/images/system-architecture.png" alt="System Architecture" width="950">
+  <img src="docs/images/system-architecture.png" alt="System Architecture" width="250">
 </p>
 
 ### Architecture Overview
@@ -105,7 +105,7 @@ The application follows a monolithic architecture consisting of a Next.js fronte
 # Authentication Flow
 
 <p align="center">
-  <img src="docs/images/auth-flow.png" alt="Authentication Flow" width="800">
+  <img src="docs/images/auth-flow.png" alt="Authentication Flow" width="250">
 </p>
 
 ### Registration Process
@@ -128,7 +128,7 @@ The application follows a monolithic architecture consisting of a Next.js fronte
 # Transfer Processing
 
 <p align="center">
-  <img src="docs/images/transfer-flow.png" alt="Transfer Flow" width="800">
+  <img src="docs/images/transfer-flow.png" alt="Transfer Flow" width="250">
 </p>
 
 ### Transfer Validation
@@ -158,7 +158,7 @@ This prevents partial updates and maintains financial consistency.
 # Database Schema
 
 <p align="center">
-  <img src="docs/images/db-erd.png" alt="Database Schema" width="900">
+  <img src="docs/images/db-erd.png" alt="Database Schema" width="250">
 </p>
 
 ### Core Entities
@@ -186,7 +186,7 @@ Stores transfer and wallet activity records.
 # Deployment Architecture
 
 <p align="center">
-  <img src="docs/images/deployment-architecture.png" alt="Deployment Architecture" width="900">
+  <img src="docs/images/deployment-architecture.png" alt="Deployment Architecture" width="250">
 </p>
 
 ### Infrastructure
